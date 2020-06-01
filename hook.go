@@ -3,7 +3,6 @@ package sqlitehook
 import (
 	"context"
 	"database/sql"
-	"sync"
 	"time"
 
 	"github.com/pkg/errors"
@@ -15,7 +14,6 @@ const defaultTimeout = time.Millisecond * 100
 type SQLiteHook struct {
 	db      *sql.DB
 	timeout time.Duration
-	*sync.RWMutex
 }
 
 // NewSQLiteHook - create new SQLite3 logrus hook
@@ -24,7 +22,6 @@ func NewSQLiteHook(db *sql.DB, timeout time.Duration) (hook *SQLiteHook, err err
 		return
 	}
 	hook = &SQLiteHook{
-		RWMutex: &sync.RWMutex{},
 		db:      db,
 		timeout: timeout,
 	}
